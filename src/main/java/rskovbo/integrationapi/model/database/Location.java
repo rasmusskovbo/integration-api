@@ -1,5 +1,6 @@
 package rskovbo.integrationapi.model.database;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Table
@@ -18,7 +19,7 @@ public class Location {
     private long lastUpdated;
 
     @OneToMany(mappedBy = "temperature", cascade = CascadeType.ALL)
-    private List<Temperature> temperatures;
+    private List<Temperature> temperatures = new ArrayList<>();
 
     public long getId() {
         return id;
@@ -50,6 +51,10 @@ public class Location {
 
     public void setTemperatures(List<Temperature> temperatures) {
         this.temperatures = temperatures;
+    }
+
+    public void addTemperature(Temperature temperature) {
+        this.temperatures.add(temperature);
     }
 
     @Override

@@ -33,54 +33,41 @@ public class ForecastService {
         Optional<Location> locationData = locationRepository.findLocationByName(location);
         // If no data available TODO Check for 3h expiration as well
         if (locationData.isEmpty()) {
-            System.out.println("Inside locationData.isEmpty");
             // If no data is available or data is expired contact API for update
             WeatherInfo weatherInfo = openWeatherService.getForecast(location, "celsius");
 
-            // Map JSON response to correct DTO format
+            // Map JSON response to correct format
             // Location info
             Location newLocation = new Location();
             newLocation.setLastUpdated(System.currentTimeMillis());
             newLocation.setName(location);
             locationRepository.save(newLocation);
 
-            // Map all temperatures and timestamps to correct DTO format
+            // Map all temperatures and timestamps to correct format
             for (LocationInfo locationInfo : weatherInfo.getForecast()) {
                 Temperature temperature = new Temperature();
                 temperature.setTemperature(locationInfo.getTemperatureInfo().getTemperature());
                 temperature.setTimestamp(locationInfo.getTimestamp());
                 temperature.setLocation(newLocation);
-                System.out.println(temperature);
                 temperatureRepository.save(temperature);
+                newLocation.addTemperature(temperature);
             }
-            Optional<Location> optionalForId = locationRepository.findLocationByName(location);
-            Long id = optionalForId.get().getId();
-            Location refreshedLocation = locationRepository.getById(id);
-            for (Temperature temp : refreshedLocation.getTemperatures()) {
-                System.out.println("Adding temp data");
+
+            for (Temperature temp : newLocation.getTemperatures()) {
                 forecast.addTemperatureData(temp);
             }
             return forecast;
 
         }
-        return getLocationAndTemperatures(forecast);
-    }
 
-    public Forecast getLocationAndTemperatures(Forecast forecast) {
-        System.out.println("getLocationAndTemps");
-
-        Optional<Location> optionalForId = locationRepository.findLocationByName(forecast.getLocationName());
-        Long id = optionalForId.get().getId();
+        long id = locationData.get().getId();
         Location refreshedLocation = locationRepository.getById(id);
 
-        List<Temperature> temperatures = refreshedLocation.getTemperatures();
-        System.out.println(temperatures);
-
-        for (Temperature temp : temperatures) {
-            System.out.println("Adding temp data");
-            forecast.addTemperatureData(temp);
+        for (Temperature temperature : refreshedLocation.getTemperatures()) {
+            forecast.addTemperatureData(temperature);
         }
-        System.out.println(forecast.toString());
         return forecast;
     }
+
+
 }

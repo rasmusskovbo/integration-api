@@ -2,6 +2,7 @@ package rskovbo.integrationapi.model.dto;
 
 import rskovbo.integrationapi.model.database.Temperature;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Forecast {
@@ -13,6 +14,7 @@ public class Forecast {
     public Forecast(String locationName) {
         this.locationName = locationName;
         this.fetchedAt = System.currentTimeMillis();
+        this.temperatureData = new ArrayList<>();
     }
 
     public String getLocationName() {

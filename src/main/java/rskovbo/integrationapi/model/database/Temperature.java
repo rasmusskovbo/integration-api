@@ -17,7 +17,7 @@ public class Temperature {
     @Column(nullable = false)
     private double temperature;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
