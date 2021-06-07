@@ -1,4 +1,4 @@
-package rskovbo.integrationapi.model;
+package rskovbo.integrationapi.model.rest;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,4 +8,12 @@ public class TemperatureInfo {
 
     @JsonProperty("temp")
     private double temperature;
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
+    }
 }
