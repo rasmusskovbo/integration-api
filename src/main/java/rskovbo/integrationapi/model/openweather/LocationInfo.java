@@ -1,4 +1,4 @@
-package rskovbo.integrationapi.model.rest;
+package rskovbo.integrationapi.model.openweather;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,17 +7,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LocationInfo {
 
     @JsonProperty("dt")
-    private long date;
+    private long timestamp;
 
     @JsonProperty("main")
     private TemperatureInfo temperatureInfo;
 
-    public long getDate() {
-        return date;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setDate(long date) {
-        this.date = date;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public TemperatureInfo getTemperatureInfo() {

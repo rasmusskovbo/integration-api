@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-import rskovbo.integrationapi.model.rest.Forecast;
+import rskovbo.integrationapi.model.openweather.WeatherInfo;
 
 import java.net.URI;
 
@@ -19,7 +19,7 @@ public class OpenWeatherService {
         this.restTemplate = restTemplate;
     }
 
-    public Forecast getForecast(String location, String temp) {
+    public WeatherInfo getForecast(String location, String temp) {
         URI uri = UriComponentsBuilder
                 .fromUriString(url)
                 .queryParam("q", location)
@@ -28,7 +28,7 @@ public class OpenWeatherService {
                 .build()
                 .toUri();
 
-        ResponseEntity<Forecast> responseEntity = restTemplate.getForEntity(uri, Forecast.class);
+        ResponseEntity<WeatherInfo> responseEntity = restTemplate.getForEntity(uri, WeatherInfo.class);
 
         return responseEntity.getBody();
     }

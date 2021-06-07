@@ -1,4 +1,4 @@
-package rskovbo.integrationapi.model.dto;
+package rskovbo.integrationapi.model.database;
 
 import javax.persistence.*;
 
@@ -8,7 +8,7 @@ public class Temperature {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(updatable = false)
     private long id;
 
     @Column(nullable = false)
@@ -17,7 +17,7 @@ public class Temperature {
     @Column(nullable = false)
     private double temperature;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
@@ -45,4 +45,21 @@ public class Temperature {
         this.temperature = temperature;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    @Override
+    public String toString() {
+        return "Temperature{" +
+                "id=" + id +
+                ", timestamp=" + timestamp +
+                ", temperature=" + temperature +
+                ", location=" + location +
+                '}';
+    }
 }

@@ -1,4 +1,4 @@
-package rskovbo.integrationapi.model.dto;
+package rskovbo.integrationapi.model.database;
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class Location {
     @Column(updatable = false)
     private long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -42,5 +42,23 @@ public class Location {
 
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public List<Temperature> getTemperatures() {
+        return temperatures;
+    }
+
+    public void setTemperatures(List<Temperature> temperatures) {
+        this.temperatures = temperatures;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastUpdated=" + lastUpdated +
+                ", temperatures=" + temperatures +
+                '}';
     }
 }
