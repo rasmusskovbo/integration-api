@@ -25,12 +25,7 @@ public class IntegrationRestController {
             @PathVariable String unit,
             @PathVariable String location
     ) {
-        try {
-            return forecastService.getForecast(location, unit);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "City not found.", e);
-        }
-
+       return forecastService.getForecast(location, unit);
     }
 
     @GetMapping("weather/favorites/{unit}/{minimumTemperature}/locations={favorites}")
@@ -39,11 +34,6 @@ public class IntegrationRestController {
             @PathVariable double minimumTemperature,
             @PathVariable String[] favorites
     ) {
-        try {
-            return forecastService.getSummary(unit, minimumTemperature, favorites);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error in one or more cities.");
-        }
+        return forecastService.getSummary(unit, minimumTemperature, favorites);
     }
-
 }

@@ -1,8 +1,11 @@
 package rskovbo.integrationapi.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 import rskovbo.integrationapi.model.openweather.WeatherInfo;
 
@@ -21,17 +24,22 @@ public class OpenWeatherService {
     }
 
     public WeatherInfo getForecast(String location) {
-        URI uri = UriComponentsBuilder
-                .fromUriString(url)
-                .queryParam("q", location)
-                .queryParam("appid", apiKey)
-                .build()
-                .toUri();
+        try {
+            URI uri = UriComponentsBuilder
+                    .fromUriString(url)
+                    .queryParam("q", location)
+                    .queryParam("appid", apiKey)
+                    .build()
+                    .toUri();
 
-        ResponseEntity<WeatherInfo> responseEntity = restTemplate.getForEntity(uri, WeatherInfo.class);
-        accessCounter++;
+            ResponseEntity<WeatherInfo> responseEntity = restTemplate.getForEntity(uri, WeatherInfo.class);
+            accessCounter++;
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException.NotFound e) {
+            throw new ResponseStatusException(400, "One or more cities not found.", e);
+        }
 
-        return responseEntity.getBody();
+
     }
 
 }
