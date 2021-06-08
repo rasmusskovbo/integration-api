@@ -1,6 +1,5 @@
 package rskovbo.integrationapi.model.dto;
 
-import rskovbo.integrationapi.model.database.Temperature;
 import rskovbo.integrationapi.service.TemperatureConverter;
 
 import java.util.ArrayList;
