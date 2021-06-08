@@ -1,21 +1,21 @@
 package rskovbo.integrationapi.model.dto;
 
-public class TemperatureData {
+public class SummaryLocationDTO {
 
-    private long timestamp;
+    private String name;
     private double temperature;
 
-    public TemperatureData(long timestamp, double temperature) {
-        this.timestamp = timestamp;
+    public SummaryLocationDTO(String name, double temperature) {
+        this.name = name;
         this.temperature = temperature;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getName() {
+        return name;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getTemperature() {

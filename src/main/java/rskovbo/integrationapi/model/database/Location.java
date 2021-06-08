@@ -18,7 +18,7 @@ public class Location {
     @Column(nullable = false)
     private long lastUpdated;
 
-    @OneToMany(mappedBy = "temperature", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
     private List<Temperature> temperatures = new ArrayList<>();
 
     public long getId() {

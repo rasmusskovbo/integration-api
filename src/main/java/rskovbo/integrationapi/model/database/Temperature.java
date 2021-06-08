@@ -17,7 +17,7 @@ public class Temperature {
     @Column(nullable = false)
     private double temperature;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
 
@@ -53,13 +53,4 @@ public class Temperature {
         this.location = location;
     }
 
-    @Override
-    public String toString() {
-        return "Temperature{" +
-                "id=" + id +
-                ", timestamp=" + timestamp +
-                ", temperature=" + temperature +
-                ", location=" + location +
-                '}';
-    }
 }

@@ -1,6 +1,7 @@
 package rskovbo.integrationapi.model.dto;
 
 import rskovbo.integrationapi.model.database.Temperature;
+import rskovbo.integrationapi.service.TemperatureConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,12 +9,14 @@ import java.util.List;
 public class Forecast {
 
     private String locationName;
+    private String requestedUnit;
     private long fetchedAt;
     private List<TemperatureData> temperatureData;
 
-    public Forecast(String locationName) {
+    public Forecast(String locationName, String unit) {
         this.locationName = locationName;
-        this.fetchedAt = System.currentTimeMillis();
+        this.requestedUnit = unit;
+        this.fetchedAt = System.currentTimeMillis()/1000;
         this.temperatureData = new ArrayList<>();
     }
 
@@ -42,15 +45,10 @@ public class Forecast {
     }
 
     public void addTemperatureData(Temperature temperature) {
-        this.temperatureData.add(new TemperatureData(temperature.getTimestamp(), temperature.getTemperature()));
+        long timestamp = temperature.getTimestamp();
+        double temp = TemperatureConverter.convertToRequestedUnit(requestedUnit, temperature.getTemperature());
+        TemperatureData tempData = new TemperatureData(timestamp, temp);
+        this.temperatureData.add(tempData);
     }
 
-    @Override
-    public String toString() {
-        return "Forecast{" +
-                "locationName='" + locationName + '\'' +
-                ", fetchedAt=" + fetchedAt +
-                ", temperatureData=" + temperatureData +
-                '}';
-    }
 }
